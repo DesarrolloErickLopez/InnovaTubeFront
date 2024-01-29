@@ -1,0 +1,43 @@
+:host {
+    position: fixed;
+    top: 1%;
+    left: 1%;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+  }
+  
+  .p-sidebar-container {
+    position: relative;
+    z-index: 1000;
+  }
+  
+  ::ng-deep .p-sidebar-left {
+    background: linear-gradient(to left top, #ff8c00 50%, #ff5f6d 50%);
+  }
+  
+  .title {
+    margin: 0;
+    margin-right: 50%;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+  }
+  
+  .p-button-sidebar {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+  }
+  
+  .p-sidebar-modal {
+    z-index: 999;
+  }
+  
+  ::ng-deep .p-component-overlay{
+    z-index: 0 !important;
+  }
+
+  .btnCerrarSesion{
+    display: flex;
+    justify-content: center;
+  }

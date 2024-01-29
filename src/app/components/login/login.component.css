@@ -9,9 +9,23 @@
   background-color: #001c55;
 }
 
+::ng-deep .p-card .p-card-content{
+  padding: 0%;
+}
+
 .card_login {
     width: 80%;
     max-width: 400px;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(to right, #ff8c00, #ff5f6d);
+    border-radius: 5%;
+}
+
+.card_register {
+    width: 80%;
     text-align: center;
     padding: 20px;
     position: relative;
@@ -347,38 +361,26 @@ transition:all .3s ease-in-out;
 }
 
 @keyframes youtubeAnim{
-0%,100%{
-  color:#c9110f;
+  0%,100%{
+    color:#c9110f;
+  }
+  50%{
+    color:#ff0000;
+  }
 }
-50%{
-  color:#ff0000;
-}
-}
-
 
 ::ng-deep .p-sidebar-full {
   background: linear-gradient(to left top, #ff8c00 50%, #ff5f6d 50%);
 }
 
-.card_register {
-  width: 50%;
-  text-align: center;
-  padding: 20px;
-  border-radius: 5%;
-}
-
-.row{
+/* .row{
   margin-top: 2%;
-}
+} */
 
 ::ng-deep .contra .p-component{
   width: 100%;
 }
 
 ::ng-deep .p-float-label{
-  margin-top: 10%;
-}
-
-.loginRow{
   margin-top: 10%;
 }

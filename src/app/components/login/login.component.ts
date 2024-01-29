@@ -3,8 +3,8 @@ import { LoginService } from 'src/app/service/login/login.service';
 import { loginModel, registerModel } from'../../models/login';
 import { MessageService } from 'primeng/api'; 
 import { Router } from '@angular/router';
-import { RecaptchaService } from '../../service/service/recaptcha.service';
-import { ReCaptchaV3Service } from 'ng-recaptcha';
+import { ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -13,39 +13,52 @@ import { ReCaptchaV3Service } from 'ng-recaptcha';
   providers: [MessageService]
 
 })
-export class LoginComponent {
+
+export class LoginComponent implements OnInit {
+  protected aFormGroup!: FormGroup;
+
+  @ViewChild('sidebar') sidebar: any;
   public robot!: boolean;
   public presionado!: boolean;
   public login: loginModel = { usuario: '', contrasenia: '' };
   public register: registerModel = {
-    nombre: 'Erick',
-    ap_paterno: 'López',
-    ap_materno: 'Rojas',
-    correo: 'erick@gmail.com ',
-    contrasenia: 'Erick0802',
-    confirmarContrasenia: 'Erick0802'
+    nombre: '',
+    ap_paterno: '',
+    ap_materno: '',
+    correo: '',
+    contrasenia: '',
+    confirmarContrasenia: ''
   };
-  registroVisible: boolean = true;
+  siteKey:string = '6LeaJmApAAAAAFok9WN2UVowSW46JREq3vYCO-Y3';
+
+  // NUEVAS VARIABLES
+  public loginVisible!: boolean;
+  public registerVisible!: boolean;
+  public botonRegistro!: string;
   
-
-
 
   constructor(
     public LoginService: LoginService,
     private messageService: MessageService,
     private router: Router,
-    private httpService: RecaptchaService,  
-    private recaptchaV3Service: ReCaptchaV3Service
+    private formBuilder: FormBuilder
     ){
-    
+    this.loginVisible = true;
+    this.botonRegistro = "Registrar";
 
   }
 
   ngOnInit(): void {
     this.robot = true;
     this.presionado = false;
+    this.aFormGroup = this.formBuilder.group({
+      recaptcha: ['', Validators.required]
+    });
+    const usuarioGuardado = localStorage.getItem('usuario');
+    if (usuarioGuardado) {
+      this.router.navigate(['/home']);
+    }
   }
-
 
   public iniciarSesion(){
     try {
@@ -81,8 +94,8 @@ export class LoginComponent {
           if (data.status === 1) {
             console.log(data);
             this.messageService.add({ severity: 'success', summary: 'Success', detail: data.mensaje });
-            localStorage.setItem('usuario', JSON.stringify(data.data));
-            this.router.navigate(['/home']);
+            this.registerVisible = false;
+            this.loginVisible = true;
           }
         },
         (error: any) => {
@@ -92,6 +105,31 @@ export class LoginComponent {
     } catch (error) {
       console.error('Error inesperado:', error);
     }
+  }
+
+  public limpiarFormularios(): void {
+    this.register = {
+      nombre: '',
+      ap_paterno: '',
+      ap_materno: '',
+      correo: '',
+      contrasenia: '',
+      confirmarContrasenia: ''
+    };
+
+    this.login= {
+      usuario: '', 
+      contrasenia: '' 
+    };
+
+  }
+
+  public toggleSidebar(): void {
+    this.limpiarFormularios();
+    this.loginVisible = !this.loginVisible;
+    this.registerVisible = !this.registerVisible;
+    this.botonRegistro = this.loginVisible? 'Registrar': 'Iniciar session';
+
   }
   
 
@@ -110,6 +148,7 @@ export class LoginComponent {
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
     if (
+      this.aFormGroup.controls['recaptcha'].getRawValue()&&
       this.register.nombre &&
       this.register.ap_paterno &&
       this.register.ap_materno &&
@@ -124,36 +163,5 @@ export class LoginComponent {
 
     return true;
   }
-
-  getInfoRecaptcha() {
-    this.robot = true;
-    this.presionado = true;
-    this.recaptchaV3Service.execute('')
-      .subscribe((token) => {
-          const auxiliar = this.httpService.getTokenClientModule(token)
-          auxiliar.subscribe( {
-            complete: () => {
-              this.presionado = false;
-            },
-            error: () => {
-              this.presionado = false;
-              this.robot = true;
-              // alert('Tenemos un problema, recarga la página página para solucionarlo o contacta con 1938web@gmail.com');
-            },
-            next: (resultado: Boolean) => {
-              if (resultado === true) {
-                this.presionado = false;
-                this.robot = false;
-              } else {
-                // alert('Error en el captcha. Eres un robot')
-                this.presionado = false;
-                this.robot = true;
-              }
-            }
-          });
-        }
-      );
-    }
-
 
 }

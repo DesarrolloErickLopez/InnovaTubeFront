@@ -5,7 +5,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app.routing.module';
-import {RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module} from 'ng-recaptcha';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 
 import { AppComponent } from './app.component';
@@ -22,6 +23,8 @@ import { PasswordModule } from 'primeng/password';
 import { ToastModule } from 'primeng/toast';
 import { DividerModule } from 'primeng/divider';
 import { TooltipModule } from 'primeng/tooltip';
+import { DialogModule } from 'primeng/dialog';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 
 @NgModule({
   declarations: [
@@ -44,14 +47,14 @@ import { TooltipModule } from 'primeng/tooltip';
     ToastModule,
     DividerModule,
     TooltipModule,
-    RecaptchaV3Module,
+    ReactiveFormsModule,
+    NgxCaptchaModule,
+    DialogModule,
+    ScrollPanelModule
 
   ],
   providers: [
-    {
-      provide: RECAPTCHA_V3_SITE_KEY,
-      useValue: '6Lddj18pAAAAAEwKU-hyKsNPop0rlGwrwA9-RkoI',
-    }],
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
