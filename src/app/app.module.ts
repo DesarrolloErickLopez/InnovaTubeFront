@@ -25,6 +25,7 @@ import { DividerModule } from 'primeng/divider';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { MenubarModule } from 'primeng/menubar';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
     ReactiveFormsModule,
     NgxCaptchaModule,
     DialogModule,
-    ScrollPanelModule
+    ScrollPanelModule,
+    MenubarModule
 
   ],
   providers: [
