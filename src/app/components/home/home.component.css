@@ -402,6 +402,24 @@
     background: linear-gradient(to left top, #ff8c00 50%, #ff5f6d 50%);
   }
 
+  ::ng-deep  .p-card {
+    max-height: 390px !important;
+    min-height: 390px !important;
+  }
+
+  ::ng-deep .favorito button{
+    border-radius: 50%;
+  }
+
+  ::ng-deep .favorito{
+    display: flex;
+    justify-content: right;
+  }
+
+  a{
+    text-decoration: none;
+  }
+
   .content{
     width: 100%;
     height: 100%;
@@ -411,9 +429,9 @@
     z-index: 1;
   }
   
-  .videoCard{
+  /* .videoCard{
     cursor: pointer;
-  }
+  } */
 
   ::ng-deep .videoCard .p-card .p-card-title{
     font-size: 14px;
